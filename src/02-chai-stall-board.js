@@ -66,16 +66,79 @@
  */
 export function updateChaiPrice(document, chaiType, newPrice) {
   // Your code here
+  if (
+    typeof chaiType !== "string" ||
+    chaiType.trim() === "" ||
+    typeof newPrice !== "number" ||
+    newPrice <= 0
+  ) {
+    return false;
+  }
+
+  const element = document.getElementById(`price-${chaiType}`);
+  if (element) {
+    element.textContent = `₹${newPrice}`;
+    return true
+  } else {
+    return false
+  }
 }
 
 export function getChaiPrice(document, chaiType) {
   // Your code here
+
+
+  const element = document.getElementById(`price-${chaiType}`);
+  if (element) {
+    const priceText = element.textContent;
+    const priceNumber = parseFloat(priceText.replace("₹", ""));
+    return priceNumber
+  } else {
+    return null
+  }
 }
 
 export function updateStallName(document, newName) {
   // Your code here
+
+  if (typeof newName !== "string" || newName.trim() === "") {
+    return null
+  }
+
+  const element = document.querySelector(".stall-name");
+  if(element){
+    const oldName =element.textContent;
+    element.textContent = newName;
+    return oldName
+  } else {
+    return null
+  }
 }
 
 export function highlightCheapestChai(document) {
   // Your code here
+  const elements = document.querySelectorAll(".chai-price");
+  if (elements.length === 0) {
+    return null;
+  }
+
+  let cheapestPrice = Infinity
+  let cheapestChai = null
+  
+  elements.forEach(element => {
+    const priceText = element.textContent;
+    const priceNumber = parseFloat(priceText.replace("₹", ""));
+    if (priceNumber < cheapestPrice) {
+      cheapestPrice = priceNumber;
+      cheapestChai = element;
+    }
+  });
+  if (cheapestChai) {
+    elements.forEach(element => {
+      element.classList.remove("cheapest");
+    });
+    cheapestChai.classList.add("cheapest");
+    return cheapestChai.getAttribute("data-chai");
+  }
+  return null;
 }

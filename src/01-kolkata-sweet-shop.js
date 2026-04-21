@@ -61,13 +61,59 @@
  *   // => item now has <span class="special-badge">Bestseller</span>
  */
 export function createSweetItem(name, price, category) {
-  // Your code here
+  if (
+    typeof name !== "string" ||
+    typeof price !== "number" ||
+    typeof category !== "string"
+  ) {
+    return null;
+  }
+
+  const sweetItem = document.createElement("div");
+  sweetItem.classList.add("sweet-item");
+
+  const title = document.createElement("h3");
+  title.textContent = name;
+
+  const priceTag = document.createElement("p");
+  priceTag.classList.add("price");
+  priceTag.textContent = `₹${price}`;
+
+  const categoryTag = document.createElement("span");
+  categoryTag.classList.add("category");
+  categoryTag.textContent = category;
+
+  sweetItem.appendChild(title);
+  sweetItem.appendChild(priceTag);
+  sweetItem.appendChild(categoryTag);
+
+  return sweetItem;
 }
 
 export function buildMenuBoard(sweets) {
   // Your code here
+  const menuBoard = document.createElement("div")
+  menuBoard.id = "menu-board"
+  if (!Array.isArray(sweets)) {
+    return null
+  }
+  sweets.forEach(sweet => {
+    const sweetItem = createSweetItem(sweet.name,sweet.price,sweet.category)
+    if (sweetItem){
+      menuBoard.appendChild(sweetItem)
+    }
+  })
+  return menuBoard
 }
 
 export function addSpecialBadge(sweetElement, badgeText) {
   // Your code here
+  if(!sweetElement || typeof badgeText !== "string" || badgeText.trim() === ""){
+    return null
+  }
+  const badge = document.createElement("span")
+  badge.classList.add("special-badge")
+  badge.textContent = badgeText
+  sweetElement.appendChild(badge)
+  return sweetElement
 }
