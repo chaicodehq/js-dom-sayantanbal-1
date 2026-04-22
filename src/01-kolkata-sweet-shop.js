@@ -7,7 +7,7 @@
  * pe lagao. Jaise sweet shop mein ek ek mithai counter pe sajati hai,
  * waise hi tum ek ek element DOM mein add karoge.
  *
- * Functions:
+ * Functions: 
  *
  *   1. createSweetItem(name, price, category)
  *      - Creates a div element with class "sweet-item"
